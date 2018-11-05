@@ -14,19 +14,14 @@ public class SpyderApplication {
 
 	private static Logger logger = Logger.getLogger(SpyderApplication.class);
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		// SpringApplication.run(SpyderApplication.class, args);
 		SpringApplication springApplication = new SpringApplication(SpyderApplication.class);
 		springApplication.setAddCommandLineProperties(false);// 禁止命令行设置参数
 		ApplicationContext context = springApplication.run(args);
 		logger.warn("爬虫脚本正在启动 ... ");//项目启动完成打印项目名
 		City run = context.getBean(City.class);
-		try {
-			run.main();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			logger.error("在爬取中执行异常：" + Log4jUtils.getTrace(e));
-		}
+		run.main();
 		logger.warn("数据爬取完毕... ");// 项目启动完成打印项目名
 	}
 }

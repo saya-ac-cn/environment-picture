@@ -151,7 +151,8 @@ public class City {
         try {
             return Jsoup.connect(url).timeout(100 * 1000).get();
         } catch (IOException e) {
-            logger.error("在连接中发生了异常：" + Log4jUtils.getTrace(e));
+            logger.error("在连接中发生了异常(1)：" + url);
+            logger.error("在连接中发生了异常(2)：" + Log4jUtils.getTrace(e));
             return null;
         }
     }
