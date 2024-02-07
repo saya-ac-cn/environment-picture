@@ -74,9 +74,19 @@ function display_cmd() {
     }
 }
 
+// 打开视频页面
+const baseHost = "http://192.168.4.1"//document.location.origin
+const streamUrl = baseHost + ':81'
+let video_status = false;
+
+const show = el => {
+    el.classList.remove('hidden')
+}
 
 //大屏
 $(function () {
+    const view = document.getElementById('stream')
+
     var myChart1 = echarts.init(document.getElementById('air_chart'));
     var option1 = {
         backgroundColor: '#1b1e25',
@@ -325,6 +335,24 @@ $(function () {
         myChart2.resize();
         myChart3.resize();
         myChart4.resize();
+    })
+
+    $("#video_switch").change((e)=>{
+        if(video_status){
+           // 上次是打开，本次关闭
+            window.stop();
+            view.style.width="320px";
+            view.style.height="240px";
+            view.src = `${baseHost}/capture?_cb=${Date.now()}`
+        }else {
+            // 上次是关闭，本次打开
+            console.log(view)
+            view.src = `${streamUrl}/stream`
+            view.style.width="320px";
+            view.style.height="240px";
+        }
+        // 重新赋予状态
+        video_status = !video_status;
     })
 
     new Joystick({
