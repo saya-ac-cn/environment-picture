@@ -1,3 +1,33 @@
+const iot_api = 'http://192.168.4.10/api';
+
+// 对ajax的Promise封装
+const ajax = function(url,type,data,datatype){
+    return new Promise((resolve,reject)=>{
+        $.ajax({
+            type: type,
+            url: url,
+            data: data,
+            dataType: datatype,
+            success: function (res) {
+                resolve(res)
+            },
+            error:function(error){
+                reject(error)
+            }
+        });
+    })
+}
+
+// 控制系统接口
+const ctrl_request = (param) => ajax(`${iot_api}/ctrl.action`,'POST',param,'json')
+
+// 转向系统接口
+const turn_request = (param) => ajax(`${iot_api}/turn.action`,'POST',param,'json')
+
+// 动力系统接口
+const gear_request = (param) => ajax(`${iot_api}/gear.action`,'POST',param,'json')
+
+
 // 摇杆封装方法
 function Joystick(opt) {
     if (!opt.zone) return;
@@ -83,8 +113,16 @@ const show = el => {
     el.classList.remove('hidden')
 }
 
+let power_status = false;
+let motor_status = false;
+let light_status = false;
+
 //大屏
 $(function () {
+
+    // 上一次的操作指令
+    let last_turn = '';
+    let last_gear = '';
     const view = document.getElementById('stream')
 
     var myChart1 = echarts.init(document.getElementById('air_chart'));
@@ -355,24 +393,118 @@ $(function () {
         video_status = !video_status;
     })
 
-    new Joystick({
-        zone: document.querySelector('#turn'),
-        disabledColor:true
-    }).init()
-        .onStart = function(distance, angle) {
-        push_cmd('转向架下发[' + angle + ']指令' );
-        display_cmd();
-        //console.log('转向架:向 => ' + angle + '移动' + distance + '个单位');
+    function send_ctrl(param) {
+        ctrl_request(param).then(data=>{
+            console.info("set turn success",data)
+        }).catch(error=>{
+            console.log('控制异常:',error);
+        })
     }
 
-    new Joystick({
+    $("#power_switch").change((e)=>{
+        if(power_status){
+            // 上次是打开，本次关闭
+            send_ctrl({fun:1,level:0});
+        }else {
+            // 上次是关闭，本次打开
+            send_ctrl({fun:1,level:1});
+        }
+        // 重新赋予状态
+        power_status = !power_status;
+    })
+
+    $("#motor_switch").change((e)=>{
+        if(motor_status){
+            // 上次是打开，本次关闭
+            send_ctrl({fun:2,level:0});
+        }else {
+            // 上次是关闭，本次打开
+            send_ctrl({fun:2,level:1});
+        }
+        // 重新赋予状态
+        motor_status = !motor_status;
+    })
+
+    $("#light_switch").change((e)=>{
+        if(light_status){
+            // 上次是打开，本次关闭
+            send_ctrl({fun:3,level:0});
+        }else {
+            // 上次是关闭，本次打开
+            send_ctrl({fun:3,level:1});
+        }
+        // 重新赋予状态
+        light_status = !light_status;
+    })
+
+    function send_turn(value) {
+        let _level = 0;
+        if (value === 'left'){
+            _level = 1;
+        }
+        if (value === 'right'){
+            _level = 2;
+        }
+        turn_request({level: _level}).then(data=>{
+            console.info("set turn success",data)
+        }).catch(error=>{
+            console.log('控制异常:',error);
+        })
+    }
+
+    const turn_handle = new Joystick({
+        zone: document.querySelector('#turn'),
+        disabledColor:true
+    }).init();
+    turn_handle.onStart = function(distance, angle) {
+        if ('' === last_turn || angle !== last_turn){
+            // 第一次下发指令 或者 本次指令和之前的不同，需要发送新的指令
+            send_turn(angle);
+            push_cmd('转向架下发[' + angle + ']指令' );
+            display_cmd();
+            last_turn = angle;
+        }
+    }
+    turn_handle.onEnd = function (){
+        send_turn('');
+        push_cmd('转向架下发[restore]指令' );
+        display_cmd();
+        last_turn = '';
+    }
+
+    function send_gear(value) {
+        let _level = 0;
+        if (value === 'up'){
+            _level = 1;
+        }
+        if (value === 'down'){
+            _level = 2;
+        }
+        gear_request({level: _level}).then(data=>{
+            console.info("set turn success",data)
+        }).catch(error=>{
+            console.log('控制异常:',error);
+        })
+    }
+    const gear_handle = new Joystick({
         zone: document.querySelector('#gear'),
         disabledColor:true
-    }).init()
-        .onStart = function(distance, angle) {
-        push_cmd('动力系统下发[' + angle + ']指令' );
+    }).init();
+
+    gear_handle.onStart = function(distance, angle) {
+        if ('' === last_turn || angle !== last_turn){
+            // 第一次下发指令 或者 本次指令和之前的不同，需要发送新的指令
+            send_gear(angle);
+            push_cmd('动力系统下发[' + angle + ']指令' );
+            display_cmd();
+            last_turn = angle;
+        }
+    }
+    gear_handle.onEnd = function (){
+        send_gear('');
+        push_cmd('动力系统下发[restore]指令' );
         display_cmd();
-        //console.log('动力系统:向 => ' + angle + '移动' + distance + '个单位');
+        last_turn = '';
     }
 
     new Joystick({
