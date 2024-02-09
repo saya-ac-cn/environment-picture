@@ -3,14 +3,14 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>环境数据采集一张图</title>
-		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="css/console.css"/>
 		<script src="js/jquery.min.js"></script>
 		<script src="js/echarts-4.2.1.min.js"></script>
 		<script type="text/javascript" src="js/nipplejs.min.js"></script>
-		<script src="js/index.js"></script>
+		<script src="js/console.js"></script>
 	</head>
 	<body>
-		<div id="container">
+		<div class="container">
 			<div class="page_top">
 				<div class="top_left">
 					<h2 class="app_name"><span>环境数据采集一张图</span><em>离线版</em></h2>
@@ -40,23 +40,23 @@
 			</div>
 			<!--顶部显示最新数据-->
 			<div class="latest_abstract">
-				<div class="abstract">
+				<div class="abstract background">
 					<div class="abstract_name">PM2.5</div>
 					<h2 class="abstract_val">100</h2>
 				</div>
-				<div class="abstract">
+				<div class="abstract background">
 					<div class="abstract_name">温度</div>
 					<h2 class="abstract_val">15</h2>
 				</div>
-				<div class="abstract">
+				<div class="abstract background">
 					<div class="abstract_name">湿度</div>
 					<h2 class="abstract_val">40</h2>
 				</div>
-				<div class="abstract">
+				<div class="abstract background">
 					<div class="abstract_name">大气压强</div>
 					<h2 class="abstract_val">5414</h2>
 				</div>
-				<div class="abstract">
+				<div class="abstract background">
 					<div class="abstract_name">海拔</div>
 					<h2 class="abstract_val">734</h2>
 				</div>
@@ -64,7 +64,7 @@
 			<!--底部图表展示-->
 			<div class="main">
 				<div class="main_left">
-					<div class="air_today" >
+					<div class="main_above background air_body">
 						<div class="air_tit">
 							实时PM2.5指数趋势
 						</div>
@@ -105,14 +105,18 @@
 						<!--pm2.5图表-->
 						<div id="air_chart"></div>
 					</div>
-					<!--温度图表-->
-					<div id="temperature_chart"></div>
+					<div class="main_below background temperature_body">
+						<div class="temperature_tit">
+							实时温度
+						</div>
+						<div id="temperature_chart"></div>
+					</div>
 				</div>
 				<div class="main_right">
 					<div class="main_above">
-						<div class="video">
+						<div class="video background">
 							<div class="video_tit">
-								实时采集画面&nbsp;&nbsp;
+								<span>实时采集画面</span>
 								<label class="switch-slide">
 									<input type="checkbox" id="video_switch" hidden>
 									<label for="video_switch" class="switch-slide-label"></label>
@@ -122,7 +126,7 @@
 								<img id="stream" src="">
 							</div>
 						</div>
-						<div class="console">
+						<div class="console background">
 							<div class="console_tit">
 								指令日志
 							</div>
@@ -134,18 +138,12 @@
 									<div></div>
 									<div></div>
 									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
-									<div></div>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="main_below">
-						<div class="electricity">
+						<div class="electricity background">
 							<div class="electricity_tit">
 								电气指标
 							</div>
@@ -154,7 +152,7 @@
 								<div id="right_driver"></div>
 							</div>
 						</div>
-						<div class="command">
+						<div class="command background">
 							<div class="command_tit">
 								控制面板
 							</div>
@@ -170,21 +168,21 @@
 								<div class="command_button">
 									<div class="command_button_line">
 										<div class="command_button_func">
-											<div class="switch-label">电源系统:</div>
+											<div class="switch-label">电源:</div>
 											<label class="switch-slide">
 												<input type="checkbox" id="power_switch" hidden>
 												<label for="power_switch" class="switch-slide-label"></label>
 											</label>
 										</div>
 										<div class="command_button_func">
-											<div class="switch-label">动力系统:</div>
+											<div class="switch-label">动力:</div>
 											<label class="switch-slide">
 												<input type="checkbox" id="motor_switch" hidden>
 												<label for="motor_switch" class="switch-slide-label"></label>
 											</label>
 										</div>
 										<div class="command_button_func">
-											<div class="switch-label">照明系统:</div>
+											<div class="switch-label">照明:</div>
 											<label class="switch-slide">
 												<input type="checkbox" id="light_switch" hidden>
 												<label for="light_switch" class="switch-slide-label"></label>

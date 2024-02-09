@@ -1,0 +1,304 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html,body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/*主体容器*/
+.container {
+    height: 100%;
+    background: #E9EBFE;
+    overflow: hidden;
+    position: relative;
+    padding: 0 2%;
+    color: #616161;
+}
+
+/*盒子的背景色*/
+.background{
+    background: #fff;
+}
+
+/*最上面标题部分*/
+.page_top{
+    height: 13%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items:center;
+}
+
+.top_left{
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+}
+
+.app_name {
+    display: flex;
+    position: relative;
+    font-size: 36px;
+    color: #777985;
+    margin-left: 5px;
+    margin-right: 45px;
+}
+
+.app_name em {
+    position: absolute;
+    display: block;
+    background: #705697;
+    right: -45px;
+    top: 10px;
+    width: 40px;
+    height: 15px;
+    line-height: 15px;
+    font-size: 12px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+/*中间最新实时指标*/
+.latest_abstract {
+    height: 12.5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.abstract{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 5px;
+    justify-content: center;
+    align-items: flex-start;
+    width: 19.2%;
+    padding-left: 1.2%;
+    box-sizing: border-box;
+}
+
+.abstract_name {
+    font-size: 14px;
+    color: #717171;
+    line-height: 26px;
+}
+
+.abstract_val {
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 32px;
+    font-weight: 900;
+}
+
+/*底部仪表盘区域*/
+.main {
+    height: 69%;
+    /*background: #0c111d;*/
+    margin-top: 1%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*仪表盘左侧*/
+.main_left {
+    display: flex;
+    width: 49.5%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/*仪表盘右侧*/
+.main_right {
+    display: flex;
+    width: 49.5%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/*pm2.5*/
+.air_body,.temperature_body{
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    padding-top: 2% !important;
+}
+
+/*pm2.5栏标题*/
+.air_tit,.temperature_tit {
+     flex-grow: 0;
+     flex-shrink: 0;
+     display: flex;
+     font-size: 14px;
+     color: #797c85;
+     padding-left: 15px;
+     box-sizing: border-box;
+}
+
+.air_list {
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding-left: 2%;
+    box-sizing: border-box;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.air_section {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.air_section_name {
+    font-size: 12px;
+    color: #aca9b0;
+}
+
+.air_1{color: #533d86;}
+.air_2{color: #60ba9e;}
+.air_3{color: #476d9e;}
+.air_4{color: #b1526a;}
+
+#air_chart,#temperature_chart {
+    width: 100%;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+
+.main_above {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2%;
+}
+
+.main_below {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+}
+
+.video, .command {
+    width: 69%;
+    height: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-top: 2%;
+}
+
+.console, .electricity {
+    display: flex;
+    width: 29%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0 10px;
+    box-sizing: border-box;
+    padding-top: 2%;
+}
+
+/*盒子的title*/
+.video_tit, .console_tit, .electricity_tit, .command_tit {
+    font-size: 14px;
+    color: #717171;
+    padding-left: 5px;
+    box-sizing: border-box;
+    line-height: 28px;
+    width: 100%;
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+/*监控*/
+.video_tit{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.video_container{width: 100%;display: flex;justify-content: center;}
+
+
+/*指令样式*/
+.console_div {
+    width: 100%;
+    flex: 1;
+}
+
+#console_lines div {
+    font-size: 12px;
+    color: #aca9b0;
+    height: 22px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/*电气仪表盘*/
+.electricity_chart {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#left_driver, #right_driver {
+    flex: 1;
+    width: 100%;
+}
+
+/*操作面板*/
+.command_rocker {
+    flex: 1;
+    width: 100%;
+}
+
+/*指令按钮*/
+.command_turn_gear_extend{display: flex;align-content: center;justify-content: space-between;align-items: center;flex-direction: row;margin-top: 20px;}
+.command_turn_gear_extend>div{position: relative;width: 100px;height: 100px;background-image: url(../rocker.png);background-size: cover;}
+.command_button{margin-top: 30px;}
+.command_button_line{display: flex;gap:20px}
+.switch-label{font-size: 14px;color: #989399;line-height: 26px;margin-right: 10px}
+.command_button_func{display: flex;align-content: center;align-items: center;flex-wrap: nowrap;flex-direction: row;}
+
+/*滑动按钮样式*/
+.switch-slide-label {display: block;width: 34px;height: 18px;background: #ccc;border-radius: 30px;cursor: pointer;position: relative;-webkit-transition: 0.3s ease;transition: 0.3s ease;}
+.switch-slide-label:after {content: '';display: block;width: 16px;height: 16px;border-radius: 100%;background: #fff;box-shadow: 0 1px 1px rgba(0, 0, 0, .1);position: absolute;left: 1px;top: 1px;-webkit-transform: translateZ(0);transform: translateZ(0);-webkit-transition:0.3s ease;transition:0.3s ease;}
+.switch-slide input:checked+label {background: #E9EBFE;transition: 0.3s ease;}
+.switch-slide input:checked+label:after {left: 17px;}

@@ -36,7 +36,7 @@ function Joystick(opt) {
     this.options = {
         mode: opt && opt.mode || 'static',
         size: opt && opt.size || 100,
-        color: disabledColor ? '#ddd' : (opt && opt.color || '#eee'),
+        color: disabledColor ? '#705697' : (opt && opt.color || '#ccc'),
         position: opt && opt.position || {
             left: '50%',
             top: '50%'
@@ -86,7 +86,7 @@ function push_cmd(cmd) {
         // 如果本地有数据，则将新数据插入到本地数据的前面
         cmd_list.unshift(cmd)
         // 如果本地数据超过20条，则删除最后一条
-        if (cmd_list.length > 12) {
+        if (cmd_list.length > 6) {
             cmd_list.pop()
         }
     }
@@ -127,7 +127,7 @@ $(function () {
 
     var myChart1 = echarts.init(document.getElementById('air_chart'));
     var option1 = {
-        backgroundColor: '#1b1e25',
+        backgroundColor: '#fff',
         title: {
             text: ''
         },
@@ -145,7 +145,7 @@ $(function () {
             {
                 axisLine: {
                     lineStyle: {
-                        color: '#3e4148',
+                        color: '#717171',
                         width: 1,//这里是为了突出显示加上的
                     }
                 },
@@ -158,13 +158,13 @@ $(function () {
             {
                 splitLine: {
                     lineStyle: {
-                        color: '#21242b',
+                        color: '#717171',
                     }
                 },
                 type: 'value',
                 axisLine: {
                     lineStyle: {
-                        color: '#43484e',
+                        color: '#717171',
                         width: 0,//这里是为了突出显示加上的
                     }
                 }
@@ -180,7 +180,7 @@ $(function () {
                 itemStyle: {
                     normal: {
                         lineStyle: {
-                            color: '#26a0c9'
+                            color: '#717171'
                         }
                     }
                 },
@@ -192,16 +192,13 @@ $(function () {
 
     var myChart2 = echarts.init(document.getElementById('temperature_chart'));
     var option2 =  {
-        backgroundColor: '#1b1e25',
-        title: {
-            text: '实时温度'
-        },
+        backgroundColor: '#fff',
         tooltip: {
             trigger: 'axis',
             axisPointer: {
                 type: 'cross',
                 label: {
-                    backgroundColor: '#6a7985'
+                    backgroundColor: '#717171'
                 }
             }
         },
@@ -223,13 +220,13 @@ $(function () {
             {
                 splitLine: {
                     lineStyle: {
-                        color: '#21242b',
+                        color: '#717171',
                     }
                 },
                 type: 'value',
                 axisLine: {
                     lineStyle: {
-                        color: '#43484e',
+                        color: '#717171',
                         width: 0,//这里是为了突出显示加上的
                     }
                 }
@@ -250,11 +247,11 @@ $(function () {
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                         {
                             offset: 0,
-                            color: 'rgb(128, 255, 165)'
+                            color: '#fde6e0'
                         },
                         {
                             offset: 1,
-                            color: 'rgb(1, 191, 236)'
+                            color: '#faf9de'
                         }
                     ])
                 },
@@ -275,7 +272,7 @@ $(function () {
             {
                 name: '电压',
                 type: 'gauge',
-                radius: '70',
+                radius: '52',
                 progress: {
                     show: true
                 },
@@ -322,7 +319,7 @@ $(function () {
             {
                 name: '电压',
                 type: 'gauge',
-                radius: '70',
+                radius: '52',
                 progress: {
                     show: true
                 },
@@ -362,8 +359,8 @@ $(function () {
 
 
     var setoption = function () {
-        myChart1.setOption(option1);//今日作业趋势
-        myChart2.setOption(option2);//货主订单执行情况
+        myChart1.setOption(option1);
+        myChart2.setOption(option2);
         myChart3.setOption(option3);
         myChart4.setOption(option4);
     }
@@ -405,9 +402,13 @@ $(function () {
         if(power_status){
             // 上次是打开，本次关闭
             send_ctrl({fun:1,level:0});
+            push_cmd('电源系统下发[off]指令' );
+            display_cmd();
         }else {
             // 上次是关闭，本次打开
             send_ctrl({fun:1,level:1});
+            push_cmd('电源系统下发[on]指令' );
+            display_cmd();
         }
         // 重新赋予状态
         power_status = !power_status;
@@ -417,9 +418,13 @@ $(function () {
         if(motor_status){
             // 上次是打开，本次关闭
             send_ctrl({fun:2,level:0});
+            push_cmd('动力系统下发[off]指令' );
+            display_cmd();
         }else {
             // 上次是关闭，本次打开
             send_ctrl({fun:2,level:1});
+            push_cmd('动力系统下发[on]指令' );
+            display_cmd();
         }
         // 重新赋予状态
         motor_status = !motor_status;
@@ -429,9 +434,13 @@ $(function () {
         if(light_status){
             // 上次是打开，本次关闭
             send_ctrl({fun:3,level:0});
+            push_cmd('照明系统下发[off]指令' );
+            display_cmd();
         }else {
             // 上次是关闭，本次打开
             send_ctrl({fun:3,level:1});
+            push_cmd('照明系统下发[on]指令' );
+            display_cmd();
         }
         // 重新赋予状态
         light_status = !light_status;
