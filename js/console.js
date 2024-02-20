@@ -376,15 +376,14 @@ $(function () {
         if(video_status){
            // 上次是打开，本次关闭
             window.stop();
-            view.style.width="320px";
-            view.style.height="240px";
+            //view.style.width="320px";
+            //view.style.height="240px";
             view.src = `${baseHost}/capture?_cb=${Date.now()}`
         }else {
             // 上次是关闭，本次打开
-            console.log(view)
             view.src = `${streamUrl}/stream`
-            view.style.width="320px";
-            view.style.height="240px";
+            //view.style.width="320px";
+            //view.style.height="240px";
         }
         // 重新赋予状态
         video_status = !video_status;
@@ -475,6 +474,9 @@ $(function () {
         }
     }
     turn_handle.onEnd = function (){
+        if ('' === last_turn){
+            return
+        }
         send_turn('');
         push_cmd('转向架下发[restore]指令' );
         display_cmd();
@@ -501,19 +503,22 @@ $(function () {
     }).init();
 
     gear_handle.onStart = function(distance, angle) {
-        if ('' === last_turn || angle !== last_turn){
+        if ('' === last_gear || angle !== last_gear){
             // 第一次下发指令 或者 本次指令和之前的不同，需要发送新的指令
             send_gear(angle);
             push_cmd('动力系统下发[' + angle + ']指令' );
             display_cmd();
-            last_turn = angle;
+            last_gear = angle;
         }
     }
     gear_handle.onEnd = function (){
+        if ('' === last_gear){
+            return
+        }
         send_gear('');
         push_cmd('动力系统下发[restore]指令' );
         display_cmd();
-        last_turn = '';
+        last_gear = '';
     }
 
     new Joystick({
